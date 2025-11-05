@@ -6,7 +6,7 @@ import { JWT_SECRET, JWT_EXPIRES_IN } from '../config/env.js';
 
 
 
-export const SignUp = async (req, res, next) => {
+export const SignUp = async (req, res, next) =>{
     
     const session = await mongoose.startSession();
     session.startTransaction();

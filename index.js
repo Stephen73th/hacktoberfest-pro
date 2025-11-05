@@ -3,6 +3,7 @@ import express from 'express';
 import { connectDB } from './database/mongodb.js';
 import { PORT } from './config/env.js'
 import authRouter from './routes/auth.routes.js';
+import enrollRouter from './routes/enroll.routes.js';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true}))
 
 
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1', enrollRouter);
 
 app.listen(PORT, () => { 
     connectDB()
