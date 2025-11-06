@@ -17,6 +17,7 @@
 # 5. Install cookie-parser - npm install cookie-parser
 # 6. Install Mongoose - npm install mongoose
 # 7. Jweb token and bcrypt - npm install jsonwebtoken bcryptjs
+# 8. Installed node-cron - npm install node-cron
 
 
 # Project setup 
@@ -101,6 +102,8 @@ example res.status(200).json({message: "Login successful"})
 204 - No content
 
 400 - bad request
+
+
 
 
 
