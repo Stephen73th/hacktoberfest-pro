@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import enroll from '../models/enroll.model.js';
 
-
+// Mark attendace function 
 export const MarkAttendance = async (req, res, next) => {
     try{
         const {email} = req.body;
@@ -9,30 +9,30 @@ export const MarkAttendance = async (req, res, next) => {
         // check for empty output
         if (!email){
             return res.status(400).json({message: "Email required"})
+        } 
+          
+        // Check if attendance already marked for today
+        const today = new Date();
+        console.log("Todays Date", today);
 
-            //Validation - check if student enrolled
-
-            const student = await enroll.findOne({email});
-
-            if(!student){
-                return res.status(400).json({message: "Student not found!"})
-            }
-            const today = new Date()
-            console.log("Todays Date", today)
-
-            // check if today is weekend
-            if(!isWeekend(today)){
+            // Check if today is weekend
+            if(isWeekend(today)){
                 return res.status(400).json({message: "Attendance can not be marked on weekends"})
             }
 
+         //Validation - check if student enrolled
+        const student = await enroll.findOne({email});
+         if(!student){
+         return res.status(400).json({message: "Student not found!"})
         }
-        // prevent student from marking attendance
+      
 
+        // prevent student from marking attendance
         const startOfDay = getStartOfDay(today)
         const endOfDay = getEndOfDay(today)
-        const allreadyMarked = student.attendance.some((records)=>{
+        const alreadyMarked = student.attendance.some((record)=>{
 
-            const TodaysDateInsideTherecordDate = new Date(record.date);
+            const recordDate = new Date(record.date);
             return recordDate >= startOfDay && recordDate <= endOfDay;
         })
 
@@ -40,7 +40,7 @@ export const MarkAttendance = async (req, res, next) => {
         //This means endOfDay is 11.59pm
         //so we are creating a time range that represents today only
 
-        if(allreadyMarked){
+        if(alreadyMarked){
             return res.status(400).json({message:"Attendance already marked"})
         }
 
@@ -52,17 +52,17 @@ export const MarkAttendance = async (req, res, next) => {
 
         })
 
-        //save it
-
+        //Save it
         await student.save();
-
         return res.status(200).json({
-            message: "Attendance marked succesfully!"
+            message: "Attendance marked succesfully!",
+            status: "present"
         }) 
 
 
 
     }catch(error){
+        
 
         return res.status(500).json({
             message: "Something went wrong",
@@ -72,20 +72,39 @@ export const MarkAttendance = async (req, res, next) => {
     }
 
 }
+
+
+
+// auto mark attendance function 
 export const autoMarkabsence = async (req, res, next) => {
+
+    try{
+
+    }catch(error){
+
+    }
+
+
     
 }
+
+//Get overall attendance function
 export const getOverallAttendance = async (req, res, next) => {
     
 }
+
+// Get all student with attendance
 export const getAllStudentWithAttendance = async (req, res, next) => {
     
 }
+
+//Get student attendance
 export const getStudentAttendance = async (req, res, next) => {
     
 }
 
 
+//Get enroll user
 
 export const EnrollUser = async (req, res, next) => {
     const session = await mongoose.startSession();
@@ -121,7 +140,7 @@ export const EnrollUser = async (req, res, next) => {
         session.endSession()
 
         return res.status(201).json({
-            message: "User has been enrolled successfully!"
+            message: "User has been enrolled successfully!" 
         })
 
 
@@ -140,28 +159,14 @@ const isWeekend = (date) => { //param date: Date object
 }
 
 // Helper function to know the start of the day
-
 const getStartOfDay = (date) => {
     const start = new Date(date);
-    start.setHours(0,0,0,0)
+    start.setHours(0,0,0,0);
+    return start;
 }
-
-// Helper function to know end of the day
-
-const getEndOfDay = (date) =>{
+// Helper function to know the end of the day
+const getEndOfDay = (date) => {
     const end = new Date(date);
-    end.setHours(23,59,59,999)
-    return end
-}
-
-// helper function to get working days in a month (Mon - Fri)
-const getWorkingDays = (startDate, endDate) => {
-    const workingDays = [];
-    const current = new Date(startDate)
-    while(current <= endDate){
-        if (!isWeekend(current)){
-            workingDays.push(new Date(current))
-        } current.setDate(current.getDate() + 1)
-    }
-    return workingDays;
+    end.setHours(23,59,59,999);
+    return end;
 }

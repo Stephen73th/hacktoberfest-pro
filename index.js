@@ -27,6 +27,8 @@ app.use(express.urlencoded({ extended: true}))
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1', enrollRouter);
+app.use('/api/v1/markattendance', enrollRouter)
+
 
 app.listen(PORT, () => { 
     connectDB()
