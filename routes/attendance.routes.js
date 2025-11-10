@@ -5,6 +5,7 @@ import { MarkAttendance, autoMarkabsence } from '../controllers/attendance.contr
 const attendanceRouter = Router();
 
 attendanceRouter.post('/mark', MarkAttendance);
+attendanceRouter.post('/automarkabsence', autoMarkabsence);
 
 
 export default attendanceRouter;

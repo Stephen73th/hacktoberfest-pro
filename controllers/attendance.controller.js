@@ -50,7 +50,7 @@ export const autoMarkabsence = async (req, res, next) => {
 
         // This will return all the list of the students in the database
 
-        const students = await enroll.findOne({})
+        const students = await enroll.find({})
 
         //Looping through the list of student to check how many students are present or absent
 
@@ -88,8 +88,7 @@ export const autoMarkabsence = async (req, res, next) => {
 
 
     } catch(error){
-        
-
+        console.log("Error in auto marking absence:", error.message);
     }
 
 
