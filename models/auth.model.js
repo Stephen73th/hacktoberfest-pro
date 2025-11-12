@@ -5,7 +5,7 @@ const authSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        minLength:[5, "name must be at least 5 characters"],
+        minLength:[3, "name must be at least 5 characters"],
         maxLength:[30, "name must not be more than 30 characters" ]
     },
 

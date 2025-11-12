@@ -9,6 +9,7 @@ const isWeekend = (date) => { //param date: Date object
    return day === 0 || day === 6 //0 = Sunday, 6 = Saturday
 }
 
+
 // Helper function to know the start of the day
 const getStartOfDay = (date) => {
     const start = new Date(date);
@@ -20,6 +21,21 @@ const getEndOfDay = (date) => {
     const end = new Date(date);
     end.setHours(13,59,59,999);
     return end;
+}
+
+//Helper function to know the end of day
+
+const getWorkingDays = (startDate, endDate) => {
+    const workingDays = []
+    const current = new Date(startDate)
+    while (current <= endDate) {
+        if(!isWeekend(current)){
+            workingDays.push(new Date(current))
+        }
+        current.setDate(current.getDate() + 1)
+    }
+    return workingDays;
+
 }
 
 // auto mark attendance function 
@@ -88,7 +104,7 @@ export const autoMarkabsence = async (req, res, next) => {
 
 
     } catch(error){
-        console.log("Error in auto marking absence:", error.message);
+        console.log("Error in auto marking absence:", error);
     }
 
 
