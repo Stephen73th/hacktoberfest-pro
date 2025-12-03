@@ -38,9 +38,14 @@ const authSchema = new mongoose.Schema({
 
     required:[true, "Track is required"]
    },
+
+   isAdmin:{
+    type: Boolean,
+    default: false
+   }
   
 }, {timestamps: true})
 
 
 const auth = mongoose.model("auth", authSchema)
-export default auth
+export default auth;

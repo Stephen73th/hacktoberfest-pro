@@ -59,7 +59,7 @@ req.headers
 
 name
 {
-    "name": "Eny Jone"
+    "name": "Enny Jone"
     "email": "try@gmail.com"
     "password": "7yhgkf",
     "Track": "Fullstack"

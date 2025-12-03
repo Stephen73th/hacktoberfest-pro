@@ -33,7 +33,6 @@ app.use(express.urlencoded({ extended: true}))
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1', enrollRouter);
 app.use('/api/v1/', attendanceRouter)
-app.use('/api/v1/', attendanceRouter)
 
 cron.schedule('59 23 * * *', async () => {
     console.log("Testing cron job for auto marking absence")

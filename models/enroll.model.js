@@ -95,10 +95,10 @@ enrollSchema.virtual("fullname").get(function(){
 
 enrollSchema.methods.getAttendancePercentage = function (){
     // step 1: Check if student has any attendance record
-    if (this.attendance.lenght === 0) return 0;
+    if (this.attendance.length === 0) return 0;
 
     // step 2: Count how many times they were present
-    const presentCount = this.attendancee.filter((record) => record.status === "present").length;
+    const presentCount = this.attendance.filter((record) => record.status === "present").length;
 
 
     //Step 3: Calculate the percentage
@@ -125,8 +125,8 @@ enrollSchema.statics.findLowAttendanceStudents = async function (threshold = 75)
 
     // Step 2:  Filter all students with attendance below threshold
     return students.filter((student) => {
-            const percentage = student.getAttendancePercentage();
-            return parseFloat(percentage) < threshold;
+        const percentage = student.getAttendancePercentage();
+        return parseFloat(percentage) < threshold;
     })
 } 
 
